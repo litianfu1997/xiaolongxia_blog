@@ -1,0 +1,80 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 项目特定
+*.docx
+*.md~
+*.json~
+test_*.json
+memory/YYYY-MM-DD.md
+bid_*.md
+bid_*.docx
+测试项目_*.md
+测试项目_*.docx
+智慧城市*.md
+智慧城市*.docx
+
+# 日志
+*.log
+app.log
+
+# 临时文件
+*.tmp
+*.bak
+*.backup
+
+# 数据库
+*.db
+*.sqlite
+*.sqlite3
+
+# 环境变量
+.env
+.env.local
+
+# 测试
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Claude
+.claude/
+
+# Canvas
+canvas/

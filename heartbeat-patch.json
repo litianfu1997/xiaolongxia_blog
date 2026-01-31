@@ -1,0 +1,11 @@
+{
+  "agents": {
+    "defaults": {
+      "heartbeat": {
+        "every": "0 8 * * *",
+        "prompt": "使用web_search搜索人工智能AI最新新闻，获取10条最热门的资讯，用纯文字格式（不用markdown）发送给用户。资讯应包含标题、来源、简要说明和时间。",
+        "target": "feishu"
+      }
+    }
+  }
+}

@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>标书智能体 - AI Bid Generation Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366F1;
+            --primary-dark: #4F46E5;
+            --secondary: #818CF8;
+            --cta: #10B981;
+            --cta-dark: #059669;
+            --background: #F5F3FF;
+            --surface: #FFFFFF;
+            --text-primary: #1E1B4B;
+            --text-secondary: #6B7280;
+            --border: #E5E7EB;
+            --success: #10B981;
+            --error: #EF4444;
+            --warning: #F59E0B;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        .header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .status-indicators {
+            display: flex;
+            gap: 12px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .status-badge.success {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .status-badge.error {
+            background: #FEE2E2;
+            color: #991B1B;
+        }
+
+        .status-badge.pending {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Grid Layout */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--background);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .card-subtitle {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.875rem;
+        }
+
+        .form-input,
+        .form-textarea,
+        .form-select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9375rem;
+            transition: all 0.2s ease;
+            background: var(--surface);
+        }
+
+        .form-input:focus,
+        .form-textarea:focus,
+        .form-select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.9375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: var(--cta);
+            color: white;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--cta-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results */
+        .result-container {
+            margin-top: 20px;
+            padding: 20px;
+            background: var(--background);
+            border-radius: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .result-container.visible {
+            display: block;
+        }
+
+        .result-content {
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .result-success {
+            background: #D1FAE5;
+            color: #065F46;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 16px;
+        }
+
+        .result-error {
+            background: #FEE2E2;
+            color: #991B1B;
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            gap: 16px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .stat-card {
+            background: var(--background);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .status-indicators {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .btn:focus-visible,
+        .form-input:focus-visible,
+        .form-textarea:focus-visible {
+            outline: 3px solid var(--primary);
+            outline-offset: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">🤖</div>
+                <span>标书智能体</span>
+            </div>
+            <div class="status-indicators" id="statusBar">
+                <div class="status-badge pending">
+                    <span>⏳</span>
+                    <span>检查中...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container main-content">
+        <div class="hero-section">
+            <h1 class="hero-title">AI Bid Generation Platform</h1>
+            <p class="hero-subtitle">智能标书生成平台 - 基于AI技术，快速生成专业标书方案</p>
+        </div>
+
+        <div class="grid-container">
+            <!-- LLM测试卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">🧪</div>
+                    <div>
+                        <div class="card-title">测试 LLM</div>
+                        <div class="card-subtitle">验证AI模型响应</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="llmPrompt">提示词</label>
+                    <textarea
+                        id="llmPrompt"
+                        class="form-textarea"
+                        placeholder="输入测试提示词..."
+                    >你好，请简单介绍一下你自己。</textarea>
+                </div>
+                <button class="btn btn-secondary" onclick="testLLM()">
+                    <span>🚀</span>
+                    <span>测试 LLM</span>
+                </button>
+                <div id="llmResult" class="result-container"></div>
+            </div>
+
+            <!-- 生成标书卡片 -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">📄</div>
+                    <div>
+                        <div class="card-title">生成标书</div>
+                        <div class="card-subtitle">AI自动生成标书方案</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="projectName">项目名称</label>
+                    <input
+                        type="text"
+                        id="projectName"
+                        class="form-input"
+                        placeholder="例如：智慧城市建设项目"
+                        value="智慧城市建设项目"
+                    >
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="projectDesc">项目描述</label>
+                    <textarea
+                        id="projectDesc"
+                        class="form-textarea"
+                        placeholder="描述项目背景和目标..."
+                    >建设一个集成了交通管理、环境监测、公共安全等功能的智慧城市综合管理平台。</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="requirements">需求要点（每行一个）</label>
+                    <textarea
+                        id="requirements"
+                        class="form-textarea"
+                        placeholder="每行输入一个需求..."
+                    >系统集成度高
+数据处理能力强
+支持移动端访问
+响应速度快</textarea>
+                </div>
+                <button class="btn btn-primary" onclick="generateBid()">
+                    <span>✨</span>
+                    <span>生成标书</span>
+                </button>
+                <div id="bidResult" class="result-container"></div>
+            </div>
+        </div>
+
+        <!-- 数据管理卡片 -->
+        <div class="card">
+            <div class="card-header">
+                <div class="card-icon">📊</div>
+                <div>
+                    <div class="card-title">数据管理</div>
+                    <div class="card-subtitle">查看和管理系统数据</div>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="staffCount">-</div>
+                    <div class="stat-label">员工数量</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="productCount">-</div>
+                    <div class="stat-label">产品数量</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="qualCount">-</div>
+                    <div class="stat-label">资质数量</div>
+                </div>
+            </div>
+            <div style="margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                <button class="btn btn-secondary" onclick="loadStaff()">
+                    <span>👥</span>
+                    <span>加载员工数据</span>
+                </button>
+                <button class="btn btn-secondary" onclick="loadProducts()">
+                    <span>📦</span>
+                    <span>加载产品数据</span>
+                </button>
+            </div>
+            <div id="dataResult" class="result-container"></div>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载时检查状态
+        window.onload = function() {
+            checkStatus();
+        };
+
+        // 检查系统状态
+        async function checkStatus() {
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+
+                let html = '';
+
+                if (data.database) {
+                    html += `<div class="status-badge success">
+                        <span>✓</span>
+                        <span>数据库 (${data.tables.length} 表)</span>
+                    </div>`;
+                } else {
+                    html += `<div class="status-badge error">
+                        <span>✗</span>
+                        <span>数据库离线</span>
+                    </div>`;
+                }
+
+                if (data.milvus) {
+                    html += `<div class="status-badge success">
+                        <span>✓</span>
+                        <span>Milvus</span>
+                    </div>`;
+                } else {
+                    html += `<div class="status-badge error">
+                        <span>✗</span>
+                        <span>Milvus 离线</span>
+                    </div>`;
+                }
+
+                if (data.ollama) {
+                    html += `<div class="status-badge success">
+                        <span>✓</span>
+                        <span>Ollama (${data.models.length} 模型)</span>
+                    </div>`;
+                } else {
+                    html += `<div class="status-badge error">
+                        <span>✗</span>
+                        <span>Ollama 离线</span>
+                    </div>`;
+                }
+
+                document.getElementById('statusBar').innerHTML = html;
+
+                // 更新统计数据
+                if (data.database && data.tables) {
+                    document.getElementById('staffCount').textContent = data.tables.includes('staff') ? '✓' : '✗';
+                    document.getElementById('productCount').textContent = data.tables.includes('products') ? '✓' : '✗';
+                    document.getElementById('qualCount').textContent = data.tables.includes('qualifications') ? '✓' : '✗';
+                }
+            } catch (error) {
+                document.getElementById('statusBar').innerHTML =
+                    `<div class="status-badge error">
+                        <span>✗</span>
+                        <span>无法连接到服务器</span>
+                    </div>`;
+            }
+        }
+
+        // 测试LLM
+        async function testLLM() {
+            const prompt = document.getElementById('llmPrompt').value;
+            const resultDiv = document.getElementById('llmResult');
+
+            resultDiv.classList.add('visible');
+            resultDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">生成中...</div>
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/test_llm', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({prompt})
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="result-content">${data.response}</div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result-error">错误: ${data.error}</div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result-error">错误: ${error.message}</div>
+                `;
+            }
+        }
+
+        // 生成标书
+        async function generateBid() {
+            const projectName = document.getElementById('projectName').value;
+            const projectDesc = document.getElementById('projectDesc').value;
+            const requirementsText = document.getElementById('requirements').value;
+            const requirements = requirementsText.split('\n').filter(r => r.trim());
+
+            const resultDiv = document.getElementById('bidResult');
+
+            resultDiv.classList.add('visible');
+            resultDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">正在生成标书，这可能需要几十秒...</div>
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/generate_bid', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        project_name: projectName,
+                        project_description: projectDesc,
+                        requirements: requirements
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = `
+                        <div class="result-success">
+                            <strong>✓ 生成成功！</strong><br>
+                            使用员工：${data.staff_used}人<br>
+                            使用产品：${data.products_used}个
+                        </div>
+                        <div class="result-content">${data.bid_document}</div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div class="result-error">错误: ${data.error}</div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result-error">错误: ${error.message}</div>
+                `;
+            }
+        }
+
+        // 加载员工数据
+        async function loadStaff() {
+            const resultDiv = document.getElementById('dataResult');
+            resultDiv.classList.add('visible');
+            resultDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">加载中...</div>
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/staff');
+                const data = await response.json();
+
+                if (data.staff && data.staff.length > 0) {
+                    let html = `<strong>共 ${data.staff.length} 名员工</strong><br><br>`;
+                    data.staff.forEach(s => {
+                        html += `
+                            <div style="margin: 12px 0; padding: 16px; background: white; border-radius: 8px; border: 1px solid var(--border);">
+                                <div style="font-weight: 600; font-size: 1rem; margin-bottom: 4px;">
+                                    ${s.name} - ${s.title || '无职位'}
+                                </div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                                    部门：${s.department || '未分配'} | 经验：${s.experience || 0}年
+                                </div>
+                            </div>
+                        `;
+                    });
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+                            暂无员工数据
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result-error">错误: ${error.message}</div>
+                `;
+            }
+        }
+
+        // 加载产品数据
+        async function loadProducts() {
+            const resultDiv = document.getElementById('dataResult');
+            resultDiv.classList.add('visible');
+            resultDiv.innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <div class="loading-text">加载中...</div>
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/products');
+                const data = await response.json();
+
+                if (data.products && data.products.length > 0) {
+                    let html = `<strong>共 ${data.products.length} 个产品</strong><br><br>`;
+                    data.products.forEach(p => {
+                        html += `
+                            <div style="margin: 12px 0; padding: 16px; background: white; border-radius: 8px; border: 1px solid var(--border);">
+                                <div style="font-weight: 600; font-size: 1rem; margin-bottom: 4px;">
+                                    ${p.name} <span style="font-weight: 400; color: var(--text-secondary); font-size: 0.875rem;">(${p.product_code})</span>
+                                </div>
+                                <div style="font-size: 0.875rem; color: var(--text-secondary);">
+                                    类别：${p.category || '未分类'}
+                                </div>
+                            </div>
+                        `;
+                    });
+                    resultDiv.innerHTML = html;
+                } else {
+                    resultDiv.innerHTML = `
+                        <div style="padding: 40px; text-align: center; color: var(--text-secondary);">
+                            暂无产品数据
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="result-error">错误: ${error.message}</div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>
