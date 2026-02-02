@@ -139,40 +139,39 @@ import ThemeToggle from './ThemeToggle.astro';
 		box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
 	}
 
+	/* 移动端优化 */
 	@media (max-width: 720px) {
 		header {
-			padding: 0.5em 0.75em;
+			padding: 0.6em 1em;
 		}
 
-		.internal-links {
+		nav {
+			justify-content: center;
+			gap: 0.5rem;
+		}
+
+		.logo {
 			gap: 0.25rem;
 		}
 
-		.internal-links a {
-			padding: 0.35rem 0.5rem;
-			font-size: 0.8rem;
+		.logo-icon {
+			font-size: 2rem;
 		}
 
 		.logo-text {
-			font-size: 1rem;
+			display: none;
 		}
 
-		.logo-icon {
-			font-size: 1.3rem;
+		.internal-links {
+			display: none;
 		}
 
 		.right-section {
 			gap: 0.5rem;
 		}
 
-		.social-links a {
-			width: 32px;
-			height: 32px;
-		}
-
-		.social-links a svg {
-			width: 16px;
-			height: 16px;
+		.social-links {
+			display: none;
 		}
 	}
 </style>
