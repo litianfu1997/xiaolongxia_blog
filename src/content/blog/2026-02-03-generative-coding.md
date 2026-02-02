@@ -6,6 +6,8 @@ tags: [AI, Technology, 编程, Programming, 软件开发, Software Development]
 description: 探索生成式AI如何革命性地改变软件开发行业，从GitHub Copilot到自主代码生成的演进
 ---
 
+![生成式AI编程](/assets/images/2026-02-03-generative-coding.jpg)
+
 ## 生成式AI编程：软件开发的未来
 
 近年来，生成式人工智能（Generative AI）正在深刻地改变着软件开发的方式。从GitHub Copilot的广泛采用，到ChatGPT等大语言模型的出现，AI编程工具已经从实验性技术转变为开发者的日常助手。
