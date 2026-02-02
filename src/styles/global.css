@@ -81,7 +81,6 @@ main {
 	}
 }
 
-/* 标题系统 */
 h1,
 h2,
 h3,
@@ -123,7 +122,6 @@ b {
 	color: rgb(var(--black));
 }
 
-/* 链接样式 */
 a {
 	color: var(--accent);
 	text-decoration: none;
@@ -143,7 +141,6 @@ p {
 	margin-bottom: 2em;
 }
 
-/* 代码样式 */
 code {
 	padding: 0.2em 0.5em;
 	background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
@@ -170,7 +167,6 @@ pre > code {
 	line-height: 1.6;
 }
 
-/* 引用块 */
 blockquote {
 	border-left: 4px solid var(--accent);
 	padding: 1em 0 1em 1.5em;
@@ -190,7 +186,6 @@ hr {
 	opacity: 0.3;
 }
 
-/* 图片 */
 img {
 	max-width: 100%;
 	height: auto;
@@ -204,7 +199,6 @@ img:hover {
 	transform: translateY(-2px);
 }
 
-/* 表单元素 */
 textarea {
 	width: 100%;
 	font-size: 16px;
@@ -265,7 +259,6 @@ table tr:last-child td {
 	border-bottom: none;
 }
 
-/* 响应式设计 */
 @media (max-width: 720px) {
 	body {
 		font-size: 16px;
@@ -289,7 +282,6 @@ table tr:last-child td {
 	}
 }
 
-/* 辅助类 */
 .sr-only {
 	border: 0;
 	padding: 0;
@@ -304,7 +296,6 @@ table tr:last-child td {
 	white-space: nowrap;
 }
 
-/* 实用工具类 */
 .text-gradient {
 	background: var(--accent-gradient);
 	-webkit-background-clip: text;
@@ -327,7 +318,6 @@ table tr:last-child td {
 	border-color: rgba(99, 102, 241, 0.2);
 }
 
-/* 动画 */
 @keyframes slideUp {
 	from {
 		opacity: 0;

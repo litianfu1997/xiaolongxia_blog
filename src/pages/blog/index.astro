@@ -16,252 +16,270 @@ const posts = (await getCollection('blog')).sort(
 <html lang="zh-CN">
 	<head>
 		<BaseHead title={`博客 - ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+		<style>
+			main {
+				width: 1000px;
+				max-width: calc(100% - 2em);
+			}
+
+			.page-header {
+				text-align: center;
+				padding: 3em 0;
+				animation: fadeIn 0.8s ease-out;
+			}
+
+			@keyframes fadeIn {
+				from {
+					opacity: 0;
+					transform: translateY(20px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			.page-title {
+				font-size: 3rem;
+				margin: 0 0 1rem;
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+			}
+
+			.page-subtitle {
+				font-size: 1.25rem;
+				color: rgb(var(--gray));
+				margin: 0;
+			}
+
+			.posts-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+				gap: 2rem;
+				margin: 2rem 0;
+			}
+
+			.post-card {
+				background: white;
+				border-radius: 16px;
+				overflow: hidden;
+				box-shadow: var(--shadow-md);
+				transition: all 0.3s ease;
+				border: 1px solid rgba(99, 102, 241, 0.1);
+				text-decoration: none;
+				animation: fadeInUp 0.6s ease-out;
+				animation-fill-mode: both;
+			}
+
+			@keyframes fadeInUp {
+				from {
+					opacity: 0;
+					transform: translateY(30px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			.post-card:nth-child(1) { animation-delay: 0.1s; }
+			.post-card:nth-child(2) { animation-delay: 0.2s; }
+			.post-card:nth-child(3) { animation-delay: 0.3s; }
+			.post-card:nth-child(4) { animation-delay: 0.4s; }
+			.post-card:nth-child(5) { animation-delay: 0.5s; }
+
+			.post-card:hover {
+				transform: translateY(-8px);
+				box-shadow: var(--shadow-xl);
+				border-color: rgba(99, 102, 241, 0.3);
+			}
+
+			.post-image {
+				width: 100%;
+				height: 220px;
+				overflow: hidden;
+				position: relative;
+			}
+
+			.post-image img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				border-radius: 0;
+				transition: transform 0.5s ease;
+			}
+
+			.post-card:hover .post-image img {
+				transform: scale(1.15);
+			}
+
+			.post-content {
+				padding: 1.75rem;
+			}
+
+			.post-meta {
+				display: flex;
+				align-items: center;
+				gap: 0.75rem;
+				margin-bottom: 0.75rem;
+			}
+
+			.post-tag {
+				display: inline-block;
+				padding: 0.25rem 0.75rem;
+				background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+				color: var(--accent);
+				border-radius: 20px;
+				font-size: 0.75rem;
+				font-weight: 600;
+			}
+
+			.post-title {
+				margin: 0 0 0.75rem;
+				font-size: 1.5rem;
+				font-weight: 700;
+				color: rgb(var(--black));
+				line-height: 1.4;
+				transition: color 0.2s ease;
+			}
+
+			.post-card:hover .post-title {
+				color: var(--accent);
+			}
+
+			.post-excerpt {
+				color: rgb(var(--gray));
+				font-size: 0.95rem;
+				line-height: 1.7;
+				margin: 0 0 1rem;
+				display: -webkit-box;
+				-webkit-line-clamp: 3;
+				-webkit-box-orient: vertical;
+				overflow: hidden;
+			}
+
+			.post-footer {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding-top: 1rem;
+				border-top: 1px solid rgb(var(--gray-light));
+			}
+
+			.post-date {
+				color: var(--accent);
+				font-size: 0.875rem;
+				font-weight: 600;
+			}
+
+			.read-more {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.25rem;
+				color: var(--accent);
+				font-weight: 600;
+				font-size: 0.875rem;
+				transition: all 0.2s ease;
+			}
+
+			.read-more svg {
+				width: 16px;
+				height: 16px;
+				transition: transform 0.2s ease;
+			}
+
+			.post-card:hover .read-more svg {
+				transform: translateX(4px);
+			}
+
+			.featured-post {
+				grid-column: 1 / -1;
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 2rem;
+				align-items: center;
+			}
+
+			.featured-post .post-image {
+				height: 400px;
+			}
+
+			.featured-post .post-title {
+				font-size: 2rem;
+			}
+
+			@media (max-width: 720px) {
+				.page-title {
+					font-size: 2rem;
+				}
+
+				.posts-grid {
+					grid-template-columns: 1fr;
+					gap: 1.5rem;
+				}
+
+				.featured-post {
+					grid-template-columns: 1fr;
+				}
+
+				.featured-post .post-image {
+					height: 250px;
+				}
+
+				.post-content {
+					padding: 1.25rem;
+				}
+
+				.post-title {
+					font-size: 1.25rem;
+				}
+			}
+		</style>
 	</head>
 	<body>
 		<Header />
 		<main>
-			<section class="blog-header">
-				<h1>📝 我的博客</h1>
-				<p>分享技术、记录成长、交流想法</p>
-			</section>
+			<div class="page-header">
+				<h1 class="page-title">📚 博客文章</h1>
+				<p class="page-subtitle">分享技术，记录生活</p>
+			</div>
 
-			<div class="posts-grid">
+			<section class="posts-grid">
 				{
 					posts.map((post, index) => (
-						<article class={`post-card ${index === 0 ? 'featured' : ''}`}>
-							<a href={`/blog/${post.id}/`} class="post-link">
+						<a href={`/blog/${post.id}/`} class="post-card" style={`animation-delay: ${index * 0.1}s`}>
+							<div class="post-image">
 								{post.data.heroImage && (
-									<div class="post-image">
-										<Image
-											width={800}
-											height={400}
-											src={post.data.heroImage}
-											alt=""
-											loading="lazy"
-										/>
-									</div>
+									<Image width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
 								)}
-								<div class="post-content">
-									<h2 class="post-title">{post.data.title}</h2>
-									<div class="post-meta">
-										<time class="post-date">
-											<FormattedDate date={post.data.pubDate} />
-										</time>
-										{post.data.tags && (
-											<div class="post-tags">
-												{post.data.tags.map((tag) => (
-													<span class="tag">{tag}</span>
-												))}
-											</div>
-										)}
-									</div>
-									{post.data.description && (
-										<p class="post-description">{post.data.description}</p>
-									)}
+							</div>
+							<div class="post-content">
+								<div class="post-meta">
+									<span class="post-tag">技术</span>
 								</div>
-							</a>
-						</article>
+								<h2 class="post-title">{post.data.title}</h2>
+								<p class="post-excerpt">
+									{post.data.description}
+								</p>
+								<div class="post-footer">
+									<span class="post-date">
+										<FormattedDate date={post.data.pubDate} />
+									</span>
+									<span class="read-more">
+										阅读更多
+										<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+											<path d="M5 12h14M12 5l7 7-7 7"/>
+										</svg>
+									</span>
+								</div>
+							</div>
+						</a>
 					))
 				}
-			</div>
+			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
-
-<style>
-	.blog-header {
-		text-align: center;
-		padding: 2em 0 3em;
-	}
-
-	.blog-header h1 {
-		font-size: 3rem;
-		margin-bottom: 0.5rem;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		background-clip: text;
-	}
-
-	.blog-header p {
-		font-size: 1.2rem;
-		color: rgb(var(--gray));
-		margin: 0;
-	}
-
-	.posts-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-		gap: 2rem;
-	}
-
-	.post-card {
-		background: white;
-		border-radius: 16px;
-		overflow: hidden;
-		box-shadow: var(--shadow-md);
-		border: 1px solid rgba(99, 102, 241, 0.1);
-		transition: all 0.3s ease;
-		animation: fadeIn 0.6s ease-out backwards;
-	}
-
-	.post-card:nth-child(1) { animation-delay: 0.05s; }
-	.post-card:nth-child(2) { animation-delay: 0.1s; }
-	.post-card:nth-child(3) { animation-delay: 0.15s; }
-	.post-card:nth-child(4) { animation-delay: 0.2s; }
-	.post-card:nth-child(5) { animation-delay: 0.25s; }
-
-	.post-card:hover {
-		transform: translateY(-8px);
-		box-shadow: var(--shadow-xl);
-		border-color: rgba(99, 102, 241, 0.2);
-	}
-
-	.post-card.featured {
-		grid-column: 1 / -1;
-		display: grid;
-		grid-template-columns: 1.5fr 1fr;
-		gap: 2rem;
-		align-items: center;
-	}
-
-	.post-link {
-		text-decoration: none;
-		color: inherit;
-		display: block;
-		height: 100%;
-	}
-
-	.post-image {
-		width: 100%;
-		height: 240px;
-		overflow: hidden;
-		background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
-	}
-
-	.post-card.featured .post-image {
-		height: 100%;
-		min-height: 320px;
-		border-radius: 16px;
-	}
-
-	.post-image img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		transition: transform 0.5s ease;
-		border-radius: 0;
-		box-shadow: none;
-	}
-
-	.post-card:hover .post-image img {
-		transform: scale(1.05);
-	}
-
-	.post-content {
-		padding: 1.75rem;
-	}
-
-	.post-title {
-		font-size: 1.5rem;
-		font-weight: 700;
-		margin: 0 0 1rem;
-		line-height: 1.4;
-		color: rgb(var(--black));
-		transition: color 0.2s ease;
-	}
-
-	.post-card:hover .post-title {
-		color: var(--accent);
-	}
-
-	.post-meta {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		margin-bottom: 1rem;
-		flex-wrap: wrap;
-	}
-
-	.post-date {
-		font-size: 0.9rem;
-		color: rgb(var(--gray));
-		display: flex;
-		align-items: center;
-	}
-
-	.post-date::before {
-		content: '📅';
-		margin-right: 0.4em;
-	}
-
-	.post-tags {
-		display: flex;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-	}
-
-	.tag {
-		display: inline-block;
-		padding: 0.25em 0.75em;
-		font-size: 0.8rem;
-		font-weight: 500;
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-		color: var(--accent);
-		border-radius: 20px;
-		transition: all 0.2s ease;
-	}
-
-	.post-card:hover .tag {
-		background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
-	}
-
-	.post-description {
-		color: rgb(var(--gray));
-		line-height: 1.7;
-		margin: 0;
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
-	@keyframes fadeIn {
-		from {
-			opacity: 0;
-			transform: translateY(20px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
-	@media (max-width: 720px) {
-		.blog-header h1 {
-			font-size: 2rem;
-		}
-
-		.posts-grid {
-			grid-template-columns: 1fr;
-			gap: 1.5rem;
-		}
-
-		.post-card.featured {
-			grid-template-columns: 1fr;
-		}
-
-		.post-card.featured .post-image {
-			min-height: 240px;
-		}
-
-		.post-content {
-			padding: 1.25rem;
-		}
-
-		.post-title {
-			font-size: 1.25rem;
-		}
-	}
-</style>
