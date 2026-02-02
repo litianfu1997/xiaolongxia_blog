@@ -1,14 +1,14 @@
 /*
   Modern Blog Theme - 小龙虾定制版
-  UI/UX Pro Max Design
+  专业配色方案
 */
 
 :root {
-	/* 主色调 - 现代渐变紫蓝 */
-	--accent: #6366f1;
-	--accent-light: #818cf8;
-	--accent-dark: #4f46e5;
-	--accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+	/* 主色调 - 现代翡翠绿 */
+	--accent: #059669;
+	--accent-light: #10b981;
+	--accent-dark: #047857;
+	--accent-gradient: linear-gradient(135deg, #059669 0%, #0d9488 100%);
 
 	/* 中性色 */
 	--black: 15, 23, 42;
@@ -24,7 +24,7 @@
 	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 
 	/* 渐变背景 */
-	--bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+	--bg-gradient: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 100%);
 	--card-gradient: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
 }
 
@@ -96,10 +96,7 @@ h6 {
 
 h1 {
 	font-size: 3rem;
-	background: var(--accent-gradient);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
+	color: var(--accent);
 	margin-bottom: 1.5rem;
 }
 
@@ -148,7 +145,7 @@ code {
 	font-size: 0.9em;
 	font-family: "SF Mono", "Monaco", "Inconsolata", monospace;
 	color: var(--accent-dark);
-	border: 1px solid rgba(99, 102, 241, 0.1);
+	border: 1px solid rgba(5, 150, 105, 0.1);
 }
 
 pre {
@@ -171,7 +168,7 @@ blockquote {
 	border-left: 4px solid var(--accent);
 	padding: 1em 0 1em 1.5em;
 	margin: 2em 0;
-	background: linear-gradient(90deg, rgba(99, 102, 241, 0.05) 0%, transparent 100%);
+	background: linear-gradient(90deg, rgba(5, 150, 105, 0.05) 0%, transparent 100%);
 	border-radius: 0 8px 8px 0;
 	font-size: 1.15em;
 	color: rgb(var(--gray));
@@ -212,7 +209,7 @@ textarea {
 textarea:focus {
 	outline: none;
 	border-color: var(--accent);
-	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+	box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
 }
 
 input {
@@ -226,7 +223,7 @@ input {
 input:focus {
 	outline: none;
 	border-color: var(--accent);
-	box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+	box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
 }
 
 table {
@@ -252,7 +249,7 @@ table th {
 }
 
 table tr:hover {
-	background: rgba(99, 102, 241, 0.03);
+	background: rgba(5, 150, 105, 0.03);
 }
 
 table tr:last-child td {
@@ -309,13 +306,13 @@ table tr:last-child td {
 	padding: 2em;
 	box-shadow: var(--shadow-md);
 	transition: all 0.3s ease;
-	border: 1px solid rgba(99, 102, 241, 0.1);
+	border: 1px solid rgba(5, 150, 105, 0.1);
 }
 
 .card:hover {
 	box-shadow: var(--shadow-xl);
 	transform: translateY(-4px);
-	border-color: rgba(99, 102, 241, 0.2);
+	border-color: rgba(5, 150, 105, 0.2);
 }
 
 @keyframes slideUp {
