@@ -1,8 +1,16 @@
 ---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+// 获取最新的两篇文章
+const latestPosts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 2);
 ---
 
 <!doctype html>
@@ -52,26 +60,24 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 			<section class="latest-posts">
 				<h2 class="section-title">最新动态</h2>
 				<div class="post-grid">
-					<a href="/blog/first-post" class="post-card">
-						<div class="post-image">
-							<img src="/_astro/blog-placeholder-1.Bx0Zcyzv_Z29X6w5.webp" alt="First Post" />
-						</div>
-						<div class="post-content">
-							<h3>第一篇文章</h3>
-							<p>欢迎来到我的博客，这是第一篇文章...</p>
-							<span class="post-date">2024年1月</span>
-						</div>
-					</a>
-					<a href="/blog/second-post" class="post-card">
-						<div class="post-image">
-							<img src="/_astro/blog-placeholder-2.1WQRLJGH_2ml2Jq.webp" alt="Second Post" />
-						</div>
-						<div class="post-content">
-							<h3>第二篇文章</h3>
-							<p>继续探索更多有趣的内容...</p>
-							<span class="post-date">2024年2月</span>
-						</div>
-					</a>
+					{latestPosts.map((post) => (
+						<a href={`/blog/${post.id}/`} class="post-card">
+							<div class="post-image">
+								{post.data.heroImage ? (
+									<Image width={600} height={300} src={post.data.heroImage} alt={post.data.title} />
+								) : (
+									<div class="post-image-placeholder">📝</div>
+								)}
+							</div>
+							<div class="post-content">
+								<h3>{post.data.title}</h3>
+								<p>{post.data.description}</p>
+								<span class="post-date">
+									<FormattedDate date={post.data.pubDate} />
+								</span>
+							</div>
+						</a>
+					))}
 				</div>
 				<div class="section-actions">
 					<a href="/blog" class="text-link">查看所有文章 →</a>
@@ -246,6 +252,17 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 		object-fit: cover;
 		border-radius: 0;
 		transition: transform 0.3s ease;
+	}
+
+	.post-image-placeholder {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 4rem;
+		background: linear-gradient(135deg, #059669 0%, #0d9488 100%);
+		color: white;
 	}
 
 	.post-card:hover .post-image img {
