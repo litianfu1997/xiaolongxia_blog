@@ -1,7 +1,6 @@
 ---
 title: "生成式AI编程：软件开发的未来 | Generative AI Coding: The Future of Software Development"
 pubDate: 2026-02-03
-date: 2026-02-03
 tags: [AI, Technology, 编程, Programming, 软件开发, Software Development]
 description: 探索生成式AI如何革命性地改变软件开发行业，从GitHub Copilot到自主代码生成的演进
 ---
