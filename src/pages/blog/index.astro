@@ -10,6 +10,17 @@ import { SITE_DESCRIPTION, SITE_TITLE } from '../../consts';
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+// 准备用于搜索的文章数据
+const postsData = posts.map(post => ({
+	id: post.id,
+	title: post.data.title,
+	description: post.data.description,
+	tags: post.data.tags || [],
+	slug: post.id,
+	heroImage: post.data.heroImage?.src || null,
+	pubDate: post.data.pubDate.toISOString(),
+}));
 ---
 
 <!doctype html>
@@ -24,7 +35,7 @@ const posts = (await getCollection('blog')).sort(
 
 			.page-header {
 				text-align: center;
-				padding: 3em 0;
+				padding: 3em 0 2em;
 				animation: fadeIn 0.8s ease-out;
 			}
 
@@ -49,6 +60,62 @@ const posts = (await getCollection('blog')).sort(
 				font-size: 1.25rem;
 				color: rgb(var(--gray));
 				margin: 0;
+			}
+
+			.search-container {
+				max-width: 600px;
+				margin: 2rem auto;
+				position: relative;
+			}
+
+			.search-box {
+				position: relative;
+				width: 100%;
+			}
+
+			.search-input {
+				width: 100%;
+				padding: 1rem 3rem 1rem 1.5rem;
+				border: 2px solid rgb(var(--gray-light));
+				border-radius: 50px;
+				font-size: 1rem;
+				transition: all 0.3s ease;
+				background: white;
+				box-shadow: var(--shadow-sm);
+			}
+
+			.search-input:focus {
+				outline: none;
+				border-color: var(--accent);
+				box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.1);
+				box-shadow: var(--shadow-md);
+			}
+
+			.search-icon {
+				position: absolute;
+				right: 1.5rem;
+				top: 50%;
+				transform: translateY(-50%);
+				color: rgb(var(--gray));
+				pointer-events: none;
+			}
+
+			.search-results-info {
+				text-align: center;
+				margin: 1rem 0;
+				color: rgb(var(--gray));
+				font-size: 0.95rem;
+			}
+
+			.no-results {
+				text-align: center;
+				padding: 4rem 2rem;
+				color: rgb(var(--gray));
+			}
+
+			.no-results-icon {
+				font-size: 4rem;
+				margin-bottom: 1rem;
 			}
 
 			.posts-grid {
@@ -80,12 +147,6 @@ const posts = (await getCollection('blog')).sort(
 					transform: translateY(0);
 				}
 			}
-
-			.post-card:nth-child(1) { animation-delay: 0.1s; }
-			.post-card:nth-child(2) { animation-delay: 0.2s; }
-			.post-card:nth-child(3) { animation-delay: 0.3s; }
-			.post-card:nth-child(4) { animation-delay: 0.4s; }
-			.post-card:nth-child(5) { animation-delay: 0.5s; }
 
 			.post-card:hover {
 				transform: translateY(-8px);
@@ -191,20 +252,13 @@ const posts = (await getCollection('blog')).sort(
 				transform: translateX(4px);
 			}
 
-			.featured-post {
-				grid-column: 1 / -1;
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: 2rem;
-				align-items: center;
-			}
-
-			.featured-post .post-image {
-				height: 400px;
-			}
-
-			.featured-post .post-title {
-				font-size: 2rem;
+			.highlight {
+				background: linear-gradient(120deg, rgba(5, 150, 105, 0.2) 0%, rgba(5, 150, 105, 0.2) 100%);
+				background-repeat: no-repeat;
+				background-size: 100% 40%;
+				background-position: 0 85%;
+				padding: 0 2px;
+				border-radius: 2px;
 			}
 
 			@media (max-width: 720px) {
@@ -212,17 +266,13 @@ const posts = (await getCollection('blog')).sort(
 					font-size: 2rem;
 				}
 
+				.search-container {
+					margin: 1.5rem auto;
+				}
+
 				.posts-grid {
 					grid-template-columns: 1fr;
 					gap: 1.5rem;
-				}
-
-				.featured-post {
-					grid-template-columns: 1fr;
-				}
-
-				.featured-post .post-image {
-					height: 250px;
 				}
 
 				.post-content {
@@ -243,10 +293,27 @@ const posts = (await getCollection('blog')).sort(
 				<p class="page-subtitle">分享技术，记录生活</p>
 			</div>
 
-			<section class="posts-grid">
+			<div class="search-container">
+				<div class="search-box">
+					<input
+						type="text"
+						id="search-input"
+						class="search-input"
+						placeholder="搜索文章标题、描述或标签..."
+						aria-label="搜索文章"
+					/>
+					<svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="11" cy="11" r="8"/>
+						<path d="m21 21-4.35-4.35"/>
+					</svg>
+				</div>
+				<div id="search-results-info" class="search-results-info"></div>
+			</div>
+
+			<section id="posts-grid" class="posts-grid">
 				{
-					posts.map((post, index) => (
-						<a href={`/blog/${post.id}/`} class="post-card" style={`animation-delay: ${index * 0.1}s`}>
+					posts.map((post) => (
+						<a href={`/blog/${post.id}/`} class="post-card" data-post-id={post.id}>
 							<div class="post-image">
 								{post.data.heroImage && (
 									<Image width={720} height={360} src={post.data.heroImage} alt={post.data.title} />
@@ -276,7 +343,96 @@ const posts = (await getCollection('blog')).sort(
 					))
 				}
 			</section>
+
+			<div id="no-results" class="no-results" style="display: none;">
+				<div class="no-results-icon">🔍</div>
+				<h3>未找到相关文章</h3>
+				<p>试试其他关键词吧</p>
+			</div>
 		</main>
 		<Footer />
+
+		<script define:vars={{ postsData }}>
+			const searchInput = document.getElementById('search-input');
+			const postsGrid = document.getElementById('posts-grid');
+			const noResults = document.getElementById('no-results');
+			const searchResultsInfo = document.getElementById('search-results-info');
+
+			// 搜索函数
+			function searchPosts(query) {
+				if (!query.trim()) {
+					// 显示所有文章
+					document.querySelectorAll('.post-card').forEach(card => {
+						card.style.display = '';
+					});
+					noResults.style.display = 'none';
+					searchResultsInfo.textContent = '';
+					return;
+				}
+
+				const lowerQuery = query.toLowerCase();
+				let matchCount = 0;
+
+				postsData.forEach(post => {
+					const card = document.querySelector(`[data-post-id="${post.id}"]`);
+					if (!card) return;
+
+					// 搜索标题、描述和标签
+					const title = post.title.toLowerCase();
+					const description = post.description.toLowerCase();
+					const tags = (post.tags || []).join(' ').toLowerCase();
+
+					const matches = title.includes(lowerQuery) ||
+						description.includes(lowerQuery) ||
+						tags.includes(lowerQuery);
+
+					if (matches) {
+						card.style.display = '';
+						matchCount++;
+						highlightText(card, query);
+					} else {
+						card.style.display = 'none';
+					}
+				});
+
+				// 显示/隐藏无结果提示
+				if (matchCount === 0) {
+					noResults.style.display = 'block';
+					searchResultsInfo.textContent = '';
+				} else {
+					noResults.style.display = 'none';
+					searchResultsInfo.textContent = `找到 ${matchCount} 篇文章`;
+				}
+			}
+
+			// 高亮匹配文本
+			function highlightText(card, query) {
+				const titleElement = card.querySelector('.post-title');
+				const originalText = titleElement.textContent;
+
+				if (!query.trim()) {
+					titleElement.innerHTML = originalText;
+					return;
+				}
+
+				const regex = new RegExp(`(${query})`, 'gi');
+				const highlighted = originalText.replace(regex, '<span class="highlight">$1</span>');
+				titleElement.innerHTML = highlighted;
+			}
+
+			// 防抖
+			let debounceTimer;
+			searchInput.addEventListener('input', (e) => {
+				clearTimeout(debounceTimer);
+				debounceTimer = setTimeout(() => {
+					searchPosts(e.target.value);
+				}, 300);
+			});
+
+			// 页面加载时聚焦搜索框
+			window.addEventListener('load', () => {
+				searchInput.focus();
+			});
+		</script>
 	</body>
 </html>
