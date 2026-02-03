@@ -3,9 +3,9 @@ title: "AI基础设施军备竞赛：Meta豪掷1350亿美元的背后 | The AI I
 pubDate: 2026-02-03
 tags: [人工智能, AI, 基础设施, Infrastructure, Meta, 数据中心, Data Center, 技术趋势, Technology Trends]
 description: Meta宣布2026年将投入高达1350亿美元建设AI数据中心，这标志着科技巨头在AI基础设施领域的激烈竞争进入新阶段。本文深入分析这一投资的战略意义、技术挑战及对开发者的启示。
-heroImage: /assets/images/2026-02-03-ai-data-center.jpg
-heroAlt: "Modern AI data center with server racks and blue lighting"
 ---
+
+![AI数据中心](/assets/images/2026-02-03-ai-data-center.jpg)
 
 ## AI基础设施军备竞赛：Meta豪掷1350亿美元的背后
 
