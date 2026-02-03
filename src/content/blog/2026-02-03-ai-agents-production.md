@@ -3,9 +3,8 @@ title: "AI代理的生产化之路：从实验到实战 | The Journey of AI Agen
 pubDate: 2026-02-03
 tags: [AI, 人工智能, AI Agents, 生产化, Production, 企业应用, Enterprise]
 description: 2026年是AI代理从实验性玩具转向企业必需品的关键一年。探讨技术挑战、实施策略和最佳实践.
+heroImage: ../../assets/images/2026-02-03-ai-agents.jpg
 ---
-
-![AI代理的生产化](/assets/images/2026-02-03-ai-agents.jpg)
 
 ## AI代理的生产化之路：从实验到实战
 
