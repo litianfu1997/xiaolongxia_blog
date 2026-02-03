@@ -1,14 +1,30 @@
 ---
-title: "OpenCode LSP JDK8兼容性解决方案：双JDK配置完全指南 | Java LSP服务器配置教程"
+title: "OpenCode LSP 兼容性问题完全解决方案：JDK8 + Bun版本冲突 | OpenCode LSP 故障排查指南"
 pubDate: 2026-02-03
-tags: [OpenCode, LSP, Java, JDK8, JDK21, jdtls, 开发工具, 代码编辑器, 兼容性问题, Maven配置]
-description: "OpenCode LSP无法使用JDK8项目的完整解决方案：详解jdtls需要JDK21运行但项目需要JDK8编译的双JDK配置方法，包含环境变量设置、pom.xml配置和工作原理分析"
+tags: [OpenCode, LSP, Java, JDK8, JDK21, jdtls, Bun, Windows, WSL, 开发工具, 代码编辑器, 兼容性问题, Maven配置, 故障排查]
+description: "OpenCode LSP兼容性问题完全解决指南：详解jdtls需要JDK21但项目需JDK8的双JDK配置，以及Windows+Bun v1.3.5导致LSP崩溃的解决方案。包含环境变量设置、Maven配置、Bun升级和WSL使用等实战技巧"
 heroImage: ../../assets/images/2026-02-03-opencode-lsp-jdk8.jpg
 ---
 
-# OpenCode LSP JDK8兼容性解决方案：双JDK配置完全指南
+# OpenCode LSP 兼容性问题完全解决方案：JDK8 + Bun版本冲突
 
-> 在使用 **OpenCode** 开发 **Java 8** 项目时遇到 **LSP 无法启动**的问题？本文详解 **jdtls** 与 **JDK 版本冲突**的完美解决方案。
+> 在使用 **OpenCode** 开发时遇到 **LSP 无法启动**或**工具崩溃**的问题？本文详解两个最常见的兼容性问题：**JDK 版本冲突**和 **Bun 版本 bug**的完整解决方案。
+
+## 🎯 问题概览：OpenCode LSP 常见兼容性问题
+
+OpenCode 是一个强大的代码编辑器，但在实际使用中，LSP（Language Server Protocol）功能可能遇到多种兼容性问题。本文涵盖两个最常见的问题：
+
+### 问题一：JDK 版本冲突（Java 项目）
+- **症状**：OpenCode 无法启动 Java LSP 服务器，代码补全、跳转等功能无法使用
+- **根本原因**：**jdtls**（Eclipse JDT Language Server）需要 **JDK 21+** 才能运行，但项目需要使用 **JDK 8** 进行编译
+- **问题本质**：**LSP 服务器运行环境**与**项目编译环境**的 JDK 版本要求不一致
+
+### 问题二：Bun 版本 bug（Windows 平台）
+- **症状**：LSP 工具崩溃，出现 "segmentation fault" 错误
+- **根本原因**：**Bun v1.3.5** 在 **Windows 平台**上存在已知的段错误 bug
+- **问题本质**：运行时环境（Bun）的已知 bug 导致 LSP 功能不稳定
+
+---
 
 ## 🎯 问题描述：OpenCode LSP 与 JDK8 的兼容性困境
 
@@ -168,6 +184,66 @@ mvn -version
   - 减少编译错误
   - 提高代码质量
 
+## ⚠️ 其他常见 OpenCode LSP 兼容性问题
+
+除了 JDK 版本冲突，OpenCode LSP 在实际使用中还可能遇到其他兼容性问题。以下是另一个常见问题及解决方案：
+
+### 问题二：Windows + Bun v1.3.5 导致 LSP 崩溃
+
+#### 问题现象
+
+```
+Error: LSP server cannot be started safely.
+⚠️ Windows + Bun v1.3.5 detected: Known segmentation fault bug with LSP.
+This causes crashes when using LSP tools (lsp_diagnostics, lsp_goto_definition, etc.).
+```
+
+#### 根本原因
+
+- **Bun v1.3.5** 在 **Windows 平台**上存在已知的 **segmentation fault bug**
+- 这个 bug 会导致使用 LSP 工具时出现**段错误（segmentation fault）**
+- 影响 OpenCode 的 LSP 功能，导致工具崩溃
+
+#### 解决方案
+
+**方案一：升级 Bun 版本（推荐）**
+
+```powershell
+# PowerShell 命令
+powershell -c "irm bun.sh/install.ps1|iex"
+```
+
+升级到 **Bun v1.3.6 或更高版本**，该版本修复了 LSP 崩溃的 bug。
+
+**方案二：使用 WSL 环境**
+
+如果升级后仍有问题，可以在 **WSL（Windows Subsystem for Linux）** 中运行 OpenCode：
+
+```bash
+# 在 WSL 中安装和运行 OpenCode
+wsl
+# 然后在 WSL 环境中使用 OpenCode
+```
+
+WSL 环境可以避开 Windows 原生 Bun 的 bug。
+
+#### 相关资源
+
+- **Bun GitHub Issue**: [https://github.com/oven-sh/bun/issues/25798](https://github.com/oven-sh/bun/issues/25798)
+- **Bun 官方文档**: [https://bun.sh](https://bun.sh)
+
+### 兼容性问题总结
+
+| 问题类型 | 症状 | 解决方案 |
+|---------|------|---------|
+| **JDK 版本冲突** | LSP 无法启动（jdtls 需要 JDK 21+） | 双 JDK 配置：JAVA_HOME=JDK21，pom.xml=JDK8 |
+| **Bun 版本 bug** | LSP 工具崩溃（Windows + Bun v1.3.5） | 升级到 Bun v1.3.6+ 或使用 WSL |
+
+**关键要点**：
+- OpenCode LSP 的兼容性问题可能来自**多个层面**（运行时环境、工具版本、平台差异）
+- 解决这类问题需要**理解工具链的分层结构**，准确定位问题根源
+- 保持**工具版本更新**是避免已知 bug 的最佳实践
+
 ## 🦞 技术总结与最佳实践
 
 ### 核心设计原则
@@ -214,16 +290,13 @@ mvn -version
 
 > 💡 **提示**：如果你的项目使用其他 JDK 版本（如 Java 11、Java 17），也可以使用同样的方法，只需调整 `pom.xml` 中的配置即可。
 
-**关键词**：OpenCode, LSP, Java 8, JDK 21, jdtls, 兼容性问题, 双JDK配置, Maven, 开发工具配置
-
-这个问题的解决体现了几个重要原则：
-
-1. **理解工具链的分层结构**：开发工具（LSP）和项目编译是两个独立的过程
-2. **分离关注点**：用不同的 JDK 满足不同需求
-3. **不要强行统一**：工具的版本要求和项目的版本要求可以不同
-
-现在可以愉快地在 OpenCode 中开发 Java 8 项目了！
+**关键词**：OpenCode, LSP, Java 8, JDK 21, jdtls, Bun, Windows, WSL, 兼容性问题, 双JDK配置, Maven, 开发工具配置, 故障排查, segment fault
 
 ---
 
-**遇到类似问题？** 记住：工具的运行环境和项目的编译环境可以是不同的！
+**遇到类似问题？记住两个核心原则：**
+
+1. **工具的运行环境 ≠ 项目的编译环境** - 它们可以使用不同的版本
+2. **保持工具版本更新** - 避免已知的兼容性 bug
+
+祝你在 OpenCode 中开发愉快！🦞
