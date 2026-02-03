@@ -3,7 +3,7 @@ title: "OpenCode LSP 实战笔记：解决 JDK8 与 Bun 版本兼容性问题"
 pubDate: 2026-02-03
 tags: [OpenCode, LSP, Java, JDK8, JDK21, jdtls, Bun, Windows, 故障排查, 开发经验]
 description: "OpenCode LSP 实战排查笔记：记录解决 jdtls 需要 JDK21 但项目需要 JDK8 的双JDK配置方案，以及 Windows + Bun v1.3.5 段错误崩溃的完整解决过程"
-heroImage: ../../assets/images/2026-02-03-opencode-lsp-jdk8.jpg
+heroImage: ../../assets/images/2026-02-03-ai-agents.jpg
 ---
 
 # OpenCode LSP 实战笔记：解决 JDK8 与 Bun 版本兼容性问题

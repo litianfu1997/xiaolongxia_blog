@@ -3,7 +3,7 @@ title: "在Windows上完美运行OpenCode：WSL2安装完整指南 | How to Inst
 pubDate: 2026-02-03
 tags: [OpenCode, WSL2, Windows, 开发工具, DevTools, 教程, Tutorial]
 description: 详细介绍如何在Windows系统上通过WSL2安装和配置OpenCode AI编程助手，解决Windows原生运行的各种问题
-heroImage: ../../assets/images/2026-02-03-opencode-wsl2.jpg
+heroImage: ../../assets/images/2026-02-03-generative-coding.jpg
 ---
 
 ## 在Windows上完美运行OpenCode：WSL2安装完整指南
