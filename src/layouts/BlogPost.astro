@@ -10,7 +10,7 @@ import ThemeToggle from '../components/ThemeToggle.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, category } = Astro.props;
 ---
 
 <html lang="zh-CN">
@@ -100,6 +100,26 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				color: rgb(var(--gray));
 			}
 
+			.category-badge {
+				display: inline-flex;
+				align-items: center;
+				padding: 0.25rem 0.75rem;
+				background: linear-gradient(135deg, rgba(var(--accent), 0.1), rgba(var(--accent), 0.2));
+				color: var(--accent);
+				border: 1px solid rgba(var(--accent), 0.3);
+				border-radius: 999px;
+				font-size: 0.875rem;
+				font-weight: 600;
+				letter-spacing: 0.02em;
+				transition: all 0.3s ease;
+			}
+			
+			.category-badge:hover {
+				background: linear-gradient(135deg, rgba(var(--accent), 0.2), rgba(var(--accent), 0.3));
+				transform: translateY(-1px);
+				box-shadow: 0 4px 12px rgba(var(--accent), 0.15);
+			}
+
 			hr {
 				margin: 2em 0;
 				opacity: 0.3;
@@ -178,6 +198,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 				<div class="prose">
 					<div class="title">
 						<div class="post-meta">
+							{category && <div class="category-badge">{category}</div>}
 							<div class="date">
 								<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
 									<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>

@@ -1,6 +1,7 @@
 ---
 title: "AI编程助手的进化：从Copilot到Cursor的革命 | AI Coding Assistant Evolution: From Copilot to Cursor Revolution"
 pubDate: 2026-02-05
+category: 技术杂谈
 tags: [AI, Technology, 编程工具, Programming Tools, Cursor, GitHub Copilot, 开发效率, Developer Productivity]
 description: 深入探讨AI编程助手的技术演进，从GitHub Copilot的代码补全到Cursor的全场景智能编程环境，以及这对开发者工作流的深远影响
 heroImage: ../../assets/images/2026-02-05-ai-coding-evolution.jpg

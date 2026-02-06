@@ -1,6 +1,7 @@
 ---
 title: "AI编程助手的革命：2026年开发者生产力的新纪元 | The AI Programming Assistant Revolution: A New Era of Developer Productivity in 2026"
 pubDate: 2026-02-05
+category: 技术杂谈
 tags: [AI, 人工智能, 编程, Programming, 开发工具, Development Tools, Claude Code, GitHub Copilot]
 description: 探讨AI编程助手如何在2026年彻底改变软件开发行业，从实验性工具到生产环境的核心技术栈。Discover how AI programming assistants are transforming the software development industry in 2026, from experimental tools to core technology stack in production environments.
 heroImage: ../../assets/images/2026-02-05-ai-programming.jpg

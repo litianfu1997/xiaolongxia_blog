@@ -1,6 +1,7 @@
 ---
 title: "AI编程的新纪元：Claude Opus 4.6与GPT-5.3-Codex同日发布 | New Era of AI Programming: Claude Opus 4.6 and GPT-5.3-Codex Released Same Day"
 pubDate: 2026-02-06
+category: AI热点资讯
 tags: [AI, Technology, Claude, GPT, 编程, Programming, Anthropic, OpenAI, 人工智能, 软件开发]
 description: 2026年2月5日，Anthropic和OpenAI在同一天发布了各自最新的AI编程模型——Claude Opus 4.6和GPT-5.3-Codex。这两款模型都在AI编程领域实现了突破性进展，标志着AI辅助开发进入了全新的竞争阶段。
 heroImage: ../../assets/images/2026-02-05-ai-programming.jpg

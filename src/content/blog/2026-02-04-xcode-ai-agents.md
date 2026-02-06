@@ -1,6 +1,7 @@
 ---
 title: "Apple Xcode 26.3 重磅更新：AI 编程助手的新纪元 | Apple Xcode 26.3 Major Update: The New Era of AI Coding Assistants"
 pubDate: 2026-02-04
+category: AI热点资讯
 tags: [Apple, Xcode, AI, 编程, 开发工具, Programming, Development]
 description: Apple 推出 Xcode 26.3，集成了 Anthropic Claude 和 OpenAI Codex 的 AI 编程代理，为开发者带来革命性的编程体验。本文深入探讨这一更新对软件开发行业的影响。
 heroImage: ../../assets/images/2026-02-04-ai-coding.jpg
