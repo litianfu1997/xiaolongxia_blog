@@ -391,3 +391,114 @@ table tr:hover td {
 		padding: 1.5em;
 	}
 }
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+	:root {
+		--black: 226, 232, 240; /* slate-200 */
+		--gray: 148, 163, 184; /* slate-400 */
+		--gray-light: 30, 41, 59; /* slate-800 */
+		--gray-dark: 203, 213, 225; /* slate-300 */
+		--white: 15, 23, 42; /* slate-900 */
+		
+		--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+		--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+		--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+		
+		--bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+		--card-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+		--glass-bg: rgba(30, 41, 59, 0.7);
+		--glass-border: rgba(255, 255, 255, 0.1);
+	}
+
+	body {
+		color: rgb(var(--gray-dark));
+	}
+
+	h1, h2, h3, h4, h5, h6 {
+		color: rgb(var(--black));
+	}
+
+	.card, .glass {
+		background: var(--glass-bg);
+		border-color: var(--glass-border);
+	}
+
+	code {
+		background: rgba(30, 41, 59, 0.8);
+		color: #e2e8f0;
+		border-color: rgba(255, 255, 255, 0.1);
+	}
+	
+	table {
+		background: #1e293b;
+	}
+	
+	table th, table td {
+		border-bottom-color: #334155;
+	}
+	
+	textarea, input {
+		background: #1e293b;
+		color: #e2e8f0;
+		border-color: #334155;
+	}
+	
+	blockquote {
+		background: linear-gradient(90deg, rgba(5, 150, 105, 0.1) 0%, transparent 100%);
+		color: rgb(var(--gray));
+	}
+}
+
+html.dark {
+	/* Explicit dark class support (if toggle is used) */
+	--black: 226, 232, 240;
+	--gray: 148, 163, 184;
+	--gray-light: 30, 41, 59;
+	--gray-dark: 203, 213, 225;
+	--white: 15, 23, 42;
+	
+	--bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+	--card-gradient: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+	--glass-bg: rgba(30, 41, 59, 0.7);
+	--glass-border: rgba(255, 255, 255, 0.1);
+}
+
+html.dark body {
+	color: rgb(var(--gray-dark));
+	background: var(--bg-gradient);
+}
+
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {
+	color: rgb(var(--black));
+}
+
+html.dark .card, html.dark .glass {
+	background: var(--glass-bg);
+	border-color: var(--glass-border);
+}
+
+html.dark code {
+	background: rgba(30, 41, 59, 0.8);
+	color: #e2e8f0;
+	border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.dark table {
+	background: #1e293b;
+}
+
+html.dark table th, html.dark table td {
+	border-bottom-color: #334155;
+}
+
+html.dark textarea, html.dark input {
+	background: #1e293b;
+	color: #e2e8f0;
+	border-color: #334155;
+}
+
+html.dark blockquote {
+	background: linear-gradient(90deg, rgba(5, 150, 105, 0.1) 0%, transparent 100%);
+	color: rgb(var(--gray));
+}
