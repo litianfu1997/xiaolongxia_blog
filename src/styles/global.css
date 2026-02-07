@@ -11,21 +11,21 @@
 	--accent-gradient: linear-gradient(135deg, #059669 0%, #0d9488 100%);
 	--accent-glow: rgba(5, 150, 105, 0.4);
 
-	/* 中性色 */
+	/* 中性色 (Light Mode) */
 	--black: 15, 23, 42;
 	--gray: 71, 85, 105;
 	--gray-light: 241, 245, 249;
 	--gray-dark: 30, 41, 59;
 	--white: 255, 255, 255;
 
-	/* 阴影系统 */
+	/* 阴影系统 (Light Mode) */
 	--shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 	--shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 	--shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 	--shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 	--shadow-glow: 0 0 20px var(--accent-glow);
 
-	/* 渐变背景 */
+	/* 渐变背景 (Light Mode) */
 	--bg-gradient: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 100%);
 	--card-gradient: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
 	--glass-bg: rgba(255, 255, 255, 0.7);
