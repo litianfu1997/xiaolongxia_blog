@@ -85,7 +85,8 @@ body {
 	padding: 0;
 	text-align: left;
 	background: var(--bg-gradient);
-	background-attachment: fixed;
+	/* 移除 fixed 背景以提升滚动性能 (High Refresh Rate Optimization) */
+	/* background-attachment: fixed; */
 	color: rgb(var(--gray-dark));
 	font-size: 18px;
 	line-height: 1.75;
@@ -94,12 +95,20 @@ body {
 	overflow-x: hidden;
 }
 
+html {
+	scroll-behavior: smooth;
+}
+
+/* 提升渲染性能 */
 main {
 	width: 900px;
 	max-width: calc(100% - 2em);
 	margin: auto;
 	padding: 3em 1em;
 	animation: fadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+	/* 优化长页面渲染 */
+	content-visibility: auto; 
+	contain-intrinsic-size: 1000px;
 }
 
 @keyframes fadeIn {
