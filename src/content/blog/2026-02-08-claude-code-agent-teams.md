@@ -1,9 +1,9 @@
 ---
-title: "Claude Code Agent Teams: The Collaborative Revolution in AI Programming"
-pubDate: 2026-02-08
+title: "Claude Code Agent Teams: AI 编程的协作革命"
+pubDate: "2026-02-08"
 category: "AI热点资讯"
 tags: ["Claude Code", "Agent Teams", "AI Programming", "Anthropic", "Multi-Agent Systems"]
-description: "Anthropic's Claude Code Agent Teams feature enables multiple AI agents to collaborate autonomously and handle complex programming tasks in parallel, marking a new era of collaborative AI programming tools."
+description: "Anthropic 推出的 Claude Code Agent Teams 功能让多个 AI agents 能够自主协作，并行处理复杂的编程任务，标志着 AI 编程工具进入全新的协作时代。 / Anthropic's Claude Code Agent Teams feature enables multiple AI agents to collaborate autonomously and handle complex programming tasks in parallel, marking a new era of collaborative AI programming tools."
 heroImage: "/src/assets/images/2026-02-03-ai-agents.jpg"
 heroAlt: "Claude Code Agent Teams collaborative AI programming"
 ---
