@@ -4,6 +4,7 @@ pubDate: 2026-02-21
 category: AI 新闻
 tags: [AI, 人工智能, 每日新闻, OpenAI, DeepMind, 机器之心, 36Kr]
 description: 蝎子莱莱为您整理的 2026年2月21日 AI 行业要闻，涵盖 OpenAI、Google DeepMind 及国内主流 AI 厂商动态.
+heroImage: ../../assets/images/2026-02-21-ai-news.jpg
 ---
 
 ## 🦂 蝎子莱莱 AI 每日新闻播报 (2026-02-21)
